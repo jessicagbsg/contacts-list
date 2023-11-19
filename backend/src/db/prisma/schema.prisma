@@ -14,6 +14,6 @@ model Contact {
   id          Int     @id @default(autoincrement())
   first_name  String
   last_name   String
-  full_name   String
-  phone       String
+  full_name   String?
+  phone       String  @unique
 }
