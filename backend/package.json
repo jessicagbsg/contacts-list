@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",
+  "prisma": {
+    "schema": "src/db/prisma/schema.prisma"
+  },
   "scripts": {
     "dev": "npm run migrate:dev && ts-node-dev src/server.ts",
     "migrate:dev": "prisma migrate dev --name dev",
