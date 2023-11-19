@@ -53,10 +53,33 @@ export default class ContactRepository {
     });
   }
 
-  async updateOneById(
-    contactId: number,
-    contact: UpdateContactDto
-  ): Promise<void> {}
+  async updateOneById(id: number, contact: UpdateContactDto): Promise<Contact> {
+    try {
+      const contactExists = await this.getContactById(id);
+
+      if (!contactExists) {
+        throw new Error("Contact doesn't exist");
+      }
+
+      if (contact.phone) {
+        const phoneAlreadyRegistered = await this.getContactByPhone(
+          contact.phone
+        );
+        if (phoneAlreadyRegistered) {
+          throw new Error("Phone number is already registered");
+        }
+      }
+
+      return await prismaClient.contact.update({
+        where: {
+          id,
+        },
+        data: contact,
+      });
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
 
   async deleteOneById(id: number): Promise<Contact> {
     try {
@@ -69,15 +92,22 @@ export default class ContactRepository {
       //     deleted_at: new Date(),
       //   },
       // });
+
       return await prismaClient.contact.delete({ where: { id } });
     } catch (err) {
       throw new Error(err.message);
     }
   }
 
-  private async getContactByPhone(phone: string): Promise<Contact | undefined> {
+  private async getContactByPhone(phone: string): Promise<Contact> {
     return prismaClient.contact.findFirst({
       where: { phone },
+    });
+  }
+
+  private async getContactById(id: number): Promise<Contact> {
+    return prismaClient.contact.findFirst({
+      where: { id },
     });
   }
 }

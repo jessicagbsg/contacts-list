@@ -12,10 +12,6 @@ export default class ContactController {
 
   async create(request: Request, response: Response): Promise<Contact> {
     try {
-      if (!request.body) {
-        response.status(400).json({ message: "contact is required" });
-        return;
-      }
       if (!this.contactService) {
         this.contactService = new ContactService();
       }
@@ -55,7 +51,32 @@ export default class ContactController {
     }
   }
 
-  async updateOneById(request: Request, response: Response): Promise<void> {}
+  async updateOneById(request: Request, response: Response): Promise<Contact> {
+    try {
+      if (!this.contactService) {
+        this.contactService = new ContactService();
+      }
+
+      const { body } = request;
+
+      if (!body.first_name && !body.last_name && !body.phone) {
+        response
+          .status(400)
+          .json({ message: "There should be at least one change" });
+        return;
+      }
+
+      const { id } = request.params;
+
+      const updatedContact = await this.contactService.updateOneById(+id, body);
+      response.status(200).json(updatedContact);
+      return updatedContact;
+    } catch (err) {
+      response.status(400).json({
+        message: err.message,
+      });
+    }
+  }
 
   async deleteOneById(request: Request, response: Response): Promise<Contact> {
     try {
