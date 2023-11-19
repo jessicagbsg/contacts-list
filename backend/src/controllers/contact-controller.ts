@@ -46,7 +46,7 @@ export default class ContactController {
       const filters: ContactFilters = request.query;
 
       const contacts = await this.contactService.list(filters);
-      response.status(201).json(contacts);
+      response.status(200).json(contacts);
       return contacts;
     } catch (err) {
       response.status(400).json({
@@ -57,5 +57,21 @@ export default class ContactController {
 
   async updateOneById(request: Request, response: Response): Promise<void> {}
 
-  async deleteOneById(request: Request, response: Response): Promise<void> {}
+  async deleteOneById(request: Request, response: Response): Promise<Contact> {
+    try {
+      if (!this.contactService) {
+        this.contactService = new ContactService();
+      }
+
+      const { id } = request.params;
+
+      const deletedContact = await this.contactService.deleteOneById(+id);
+      response.status(204).json(deletedContact);
+      return deletedContact;
+    } catch (err) {
+      response.status(400).json({
+        message: err.message,
+      });
+    }
+  }
 }

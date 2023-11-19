@@ -35,7 +35,7 @@ export default class ContactService {
     contact: UpdateContactDto
   ): Promise<void> {}
 
-  async deleteOneById(contactId: number): Promise<void> {
+  async deleteOneById(contactId: number): Promise<Contact> {
     return await this.contactRepository.deleteOneById(contactId);
   }
 

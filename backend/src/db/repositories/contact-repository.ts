@@ -58,7 +58,22 @@ export default class ContactRepository {
     contact: UpdateContactDto
   ): Promise<void> {}
 
-  async deleteOneById(contactId: number): Promise<void> {}
+  async deleteOneById(id: number): Promise<Contact> {
+    try {
+      // soft delete:
+      // return await prismaClient.contact.update({
+      //   where: {
+      //     id,
+      //   },
+      //   data: {
+      //     deleted_at: new Date(),
+      //   },
+      // });
+      return await prismaClient.contact.delete({ where: { id } });
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
 
   private async getContactByPhone(phone: string): Promise<Contact | undefined> {
     return prismaClient.contact.findFirst({
