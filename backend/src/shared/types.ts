@@ -1,5 +1,5 @@
 export interface ContactFilters {
-  last_name: string;
+  last_name?: string;
 }
 
 export interface UpdateContactDto {

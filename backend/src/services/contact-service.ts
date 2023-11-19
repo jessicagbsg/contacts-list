@@ -23,7 +23,12 @@ export default class ContactService {
     return await this.contactRepository.create(contact);
   }
 
-  async list(options?: ContactFilters): Promise<void> {}
+  async list(options?: ContactFilters): Promise<ContactResponse[]> {
+    if (options) {
+      return await this.contactRepository.listByLastName(options);
+    }
+    return await this.contactRepository.listAll();
+  }
 
   async updateOneById(
     contactId: number,

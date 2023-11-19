@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import { Request, Response, query } from "express";
 import ContactService from "../services/contact-service";
 import { ContactResponse } from "../models/contact-model";
+import { ContactFilters } from "../shared/types";
 
 export default class ContactController {
   contactService: ContactService;
@@ -29,14 +30,30 @@ export default class ContactController {
 
       response.status(201).json(createdContact);
       return;
-    } catch (error) {
+    } catch (err) {
       response.status(400).json({
-        message: error.message,
+        message: err.message,
       });
     }
   }
 
-  async list(request: Request, response: Response): Promise<void> {}
+  async list(request: Request, response: Response): Promise<void> {
+    try {
+      if (!this.contactService) {
+        this.contactService = new ContactService();
+      }
+
+      const filters: ContactFilters = request.query;
+
+      const contacts = await this.contactService.list(filters);
+      response.status(201).json(contacts);
+      return;
+    } catch (err) {
+      response.status(400).json({
+        message: err.message,
+      });
+    }
+  }
 
   async updateOneById(request: Request, response: Response): Promise<void> {}
 

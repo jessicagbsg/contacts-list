@@ -15,7 +15,10 @@ export default class ContactRepository {
       if (contactAlreadyExists) {
         throw new Error("Phone number is already registered");
       }
+
       contact.full_name = `${contact.first_name} ${contact.last_name}`;
+      contact.first_name = contact.first_name.toLowerCase();
+      contact.last_name = contact.last_name.toLowerCase();
 
       const createdContact = await prismaClient.contact.create({
         data: contact,
@@ -24,16 +27,22 @@ export default class ContactRepository {
       const { id, ...createdContactWithoutId } = createdContact;
 
       return createdContactWithoutId;
-    } catch (error) {
-      throw new Error(error.message);
+    } catch (err) {
+      throw new Error(err.message);
     }
   }
 
-  async listOneById(contactId: number): Promise<void> {}
+  async listAll(): Promise<ContactResponse[]> {
+    return await prismaClient.contact.findMany();
+  }
 
-  async listAll(): Promise<void> {}
-
-  async listByLastName(options: ContactFilters): Promise<void> {}
+  async listByLastName(options: ContactFilters): Promise<ContactResponse[]> {
+    return await prismaClient.contact.findMany({
+      where: {
+        last_name: options.last_name.toLowerCase(),
+      },
+    });
+  }
 
   async updateOneById(
     contactId: number,
