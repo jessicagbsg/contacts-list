@@ -1,6 +1,6 @@
 import { Request, Response, query } from "express";
 import ContactService from "../services/contact-service";
-import { ContactResponse } from "../models/contact-model";
+import { Contact } from "../models/contact-model";
 import { ContactFilters } from "../shared/types";
 
 export default class ContactController {
@@ -10,7 +10,7 @@ export default class ContactController {
     this.contactService = new ContactService();
   }
 
-  async create(request: Request, response: Response): Promise<ContactResponse> {
+  async create(request: Request, response: Response): Promise<Contact> {
     try {
       if (!request.body) {
         response.status(400).json({ message: "contact is required" });
@@ -29,7 +29,7 @@ export default class ContactController {
       const createdContact = await this.contactService.create(body);
 
       response.status(201).json(createdContact);
-      return;
+      return createdContact;
     } catch (err) {
       response.status(400).json({
         message: err.message,
@@ -37,7 +37,7 @@ export default class ContactController {
     }
   }
 
-  async list(request: Request, response: Response): Promise<void> {
+  async list(request: Request, response: Response): Promise<Contact[]> {
     try {
       if (!this.contactService) {
         this.contactService = new ContactService();
@@ -47,7 +47,7 @@ export default class ContactController {
 
       const contacts = await this.contactService.list(filters);
       response.status(201).json(contacts);
-      return;
+      return contacts;
     } catch (err) {
       response.status(400).json({
         message: err.message,

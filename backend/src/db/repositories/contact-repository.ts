@@ -1,4 +1,4 @@
-import { ContactResponse } from "../../models/contact-model";
+import { Contact } from "../../models/contact-model";
 import {
   CreateContactDto,
   ContactFilters,
@@ -8,7 +8,7 @@ import {
 import { prismaClient } from "../prisma/prismaCLient";
 
 export default class ContactRepository {
-  async create(contact: CreateContactDto): Promise<ContactResponse> {
+  async create(contact: CreateContactDto): Promise<Contact> {
     try {
       const contactAlreadyExists = await this.getContactByPhone(contact.phone);
 
@@ -24,22 +24,31 @@ export default class ContactRepository {
         data: contact,
       });
 
-      const { id, ...createdContactWithoutId } = createdContact;
-
-      return createdContactWithoutId;
+      return createdContact;
     } catch (err) {
       throw new Error(err.message);
     }
   }
 
-  async listAll(): Promise<ContactResponse[]> {
-    return await prismaClient.contact.findMany();
-  }
-
-  async listByLastName(options: ContactFilters): Promise<ContactResponse[]> {
+  async listAll(): Promise<Contact[]> {
     return await prismaClient.contact.findMany({
       where: {
-        last_name: options.last_name.toLowerCase(),
+        deleted_at: null,
+      },
+    });
+  }
+
+  async listByLastName(options: ContactFilters): Promise<Contact[]> {
+    return await prismaClient.contact.findMany({
+      where: {
+        AND: [
+          {
+            last_name: options.last_name.toLowerCase(),
+          },
+          {
+            deleted_at: null,
+          },
+        ],
       },
     });
   }
@@ -51,9 +60,7 @@ export default class ContactRepository {
 
   async deleteOneById(contactId: number): Promise<void> {}
 
-  private async getContactByPhone(
-    phone: string
-  ): Promise<ContactResponse | undefined> {
+  private async getContactByPhone(phone: string): Promise<Contact | undefined> {
     return prismaClient.contact.findFirst({
       where: { phone },
     });

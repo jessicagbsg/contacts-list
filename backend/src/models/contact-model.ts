@@ -4,6 +4,7 @@ export interface Contact {
   last_name: string;
   full_name?: string;
   phone: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 }
-
-export type ContactResponse = Omit<Contact, "id">;

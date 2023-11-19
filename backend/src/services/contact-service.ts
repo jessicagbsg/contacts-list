@@ -4,7 +4,7 @@ import {
   UpdateContactDto,
 } from "../shared/types";
 import ContactRepository from "../db/repositories/contact-repository";
-import { ContactResponse } from "../models/contact-model";
+import { Contact } from "../models/contact-model";
 
 export default class ContactService {
   contactRepository: ContactRepository;
@@ -13,7 +13,7 @@ export default class ContactService {
     this.contactRepository = new ContactRepository();
   }
 
-  async create(contact: CreateContactDto): Promise<ContactResponse> {
+  async create(contact: CreateContactDto): Promise<Contact> {
     const validContact = await this.validateContact(contact);
 
     if (!validContact.valid) {
@@ -23,7 +23,7 @@ export default class ContactService {
     return await this.contactRepository.create(contact);
   }
 
-  async list(options?: ContactFilters): Promise<ContactResponse[]> {
+  async list(options?: ContactFilters): Promise<Contact[]> {
     if (options) {
       return await this.contactRepository.listByLastName(options);
     }
@@ -35,7 +35,9 @@ export default class ContactService {
     contact: UpdateContactDto
   ): Promise<void> {}
 
-  async deleteOneById(contactId: number): Promise<void> {}
+  async deleteOneById(contactId: number): Promise<void> {
+    return await this.contactRepository.deleteOneById(contactId);
+  }
 
   private async validateContact(contact: CreateContactDto): Promise<{
     valid: boolean;

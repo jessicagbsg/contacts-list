@@ -11,9 +11,12 @@ datasource db {
 }
 
 model Contact {
-  id          Int     @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   first_name  String
   last_name   String
   full_name   String?
-  phone       String  @unique
+  phone       String    @unique
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?  
+  deleted_at  DateTime?  
 }
