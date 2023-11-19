@@ -1,4 +1,4 @@
-import { Request, Response, query } from "express";
+import { Request, Response } from "express";
 import ContactService from "../services/contact-service";
 import { Contact } from "../models/contact-model";
 import { ContactFilters } from "../shared/types";
