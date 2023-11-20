@@ -13,6 +13,7 @@ export default class ContactRepository {
       const contactAlreadyExists = await this.getContactByPhone(contact.phone);
 
       if (contactAlreadyExists) {
+        console.log(contactAlreadyExists);
         throw new Error("Phone number is already registered");
       }
 
@@ -109,7 +110,7 @@ export default class ContactRepository {
 
   private async getContactByPhone(phone: string): Promise<Contact> {
     return prismaClient.contact.findFirst({
-      where: { phone },
+      where: { phone: { equals: phone } },
     });
   }
 

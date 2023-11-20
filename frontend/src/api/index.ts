@@ -12,13 +12,12 @@ export const httpClient = axios.create({
 
 export async function create(data: CreateContactDto) {
   const response = await httpClient.post<Contact>("", {
-    data,
+    ...data,
   });
   return response.data;
 }
 
 export async function listContacts(filters?: ContactFilters) {
-  console.log(filters);
   const response = await httpClient.get<Contact[]>("", {
     params: {
       ...filters,
