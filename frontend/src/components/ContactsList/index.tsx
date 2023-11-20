@@ -1,5 +1,13 @@
-import React from "react";
+import { Contact } from "../Contact";
+import { ContactsContainer } from "./styles";
 
 export const ContactsList = () => {
-  return <div>ContactsList</div>;
+  return (
+    <ContactsContainer>
+      <Contact />
+      <Contact />
+      <Contact />
+      <Contact />
+    </ContactsContainer>
+  );
 };

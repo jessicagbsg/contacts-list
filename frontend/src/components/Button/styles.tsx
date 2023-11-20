@@ -14,7 +14,7 @@ export const StyledButton = styled.button<{ color: IButton["color"] }>`
   color: #fefefe;
   border: none;
   border-radius: 5px;
-  padding: 0.5rem 1.25rem;
+  padding: 0.75rem;
   font-weight: 500;
   font-size: 1rem;
 `;

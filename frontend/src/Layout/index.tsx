@@ -3,7 +3,7 @@ import { Header } from "../components/Header";
 import { GrFormAdd } from "react-icons/gr";
 import { Button } from "../components/Button";
 import { Search } from "../components/Search";
-// import { ContactsList } from "../components/ContactsList";
+import { ContactsList } from "../components/ContactsList";
 
 export const Layout = () => {
   const handleAddContact = () => {};
@@ -19,7 +19,7 @@ export const Layout = () => {
         </Button>
       </AddContactContainer>
       <Search />
-      {/* <ContactsList /> */}
+      <ContactsList />
     </Container>
   );
 };
