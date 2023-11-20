@@ -12,12 +12,13 @@ import { Contact, ContactFilters } from "../types";
 
 export const Layout = () => {
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
-
+  const [filtered, setfiltered] = useState<boolean>(false);
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [error, setError] = useState<string | undefined>();
 
   const getContacts = useCallback(async () => {
     setError(undefined);
+    setfiltered(false);
     try {
       const response = await listContacts();
       setContacts(response);
@@ -28,6 +29,7 @@ export const Layout = () => {
 
   const getContactsWithFilter = useCallback(async (filter: ContactFilters) => {
     setError(undefined);
+    setfiltered(filtered);
     const response = await listContacts(filter);
     setContacts(response);
     if (response.length === 0) setError("No contacts found");
@@ -35,7 +37,7 @@ export const Layout = () => {
 
   useEffect(() => {
     getContacts();
-  }, [contacts]);
+  }, [filtered]);
 
   const openAddContactModal = () => {
     setCreateModalOpen(true);

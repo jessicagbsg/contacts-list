@@ -35,6 +35,9 @@ export default class ContactRepository {
       where: {
         deleted_at: null,
       },
+      orderBy: {
+        full_name: "asc",
+      },
     });
   }
 
@@ -51,6 +54,9 @@ export default class ContactRepository {
             deleted_at: null,
           },
         ],
+      },
+      orderBy: {
+        full_name: "asc",
       },
     });
   }

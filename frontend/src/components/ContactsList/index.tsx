@@ -6,9 +6,10 @@ export const ContactsList = ({ contacts }: IContactsList) => {
   return (
     <ContactsContainer>
       {contacts &&
-        contacts.map((contact) => {
+        contacts.map((contact, index) => {
           return (
             <ContactCard
+              key={index}
               id={contact?.id}
               fullName={contact?.full_name}
               phoneNumber={contact?.phone}

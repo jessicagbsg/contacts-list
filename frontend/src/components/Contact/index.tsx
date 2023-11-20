@@ -18,7 +18,7 @@ export const Contact = ({ fullName, phoneNumber, id }: IContact) => {
   const handleDeleteContact = async () => {
     try {
       if (!id) return;
-      const response = await deleteContact(id);
+      await deleteContact(id);
     } catch (error) {}
   };
   return (

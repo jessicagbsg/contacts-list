@@ -18,6 +18,7 @@ export async function create(data: CreateContactDto) {
 }
 
 export async function listContacts(filters?: ContactFilters) {
+  console.log(filters);
   const response = await httpClient.get<Contact[]>("", {
     params: {
       ...filters,
