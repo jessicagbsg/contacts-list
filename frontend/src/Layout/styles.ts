@@ -25,4 +25,7 @@ export const AddContactContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   min-width: 100%;
+  h2 {
+    font-size: 1.75rem;
+  }
 `;
