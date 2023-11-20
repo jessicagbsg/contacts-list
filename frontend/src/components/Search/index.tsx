@@ -1,5 +1,16 @@
-import React from "react";
+import { SearchContainer, SearchInput } from "./styles";
+import { CgSearch } from "react-icons/cg";
 
 export const Search = () => {
-  return <div>Search</div>;
+  const handleInputChange = () => {};
+  return (
+    <SearchContainer>
+      <CgSearch />
+      <SearchInput
+        type="text"
+        placeholder="Search for contact by last name..."
+        onChange={handleInputChange}
+      />
+    </SearchContainer>
+  );
 };
