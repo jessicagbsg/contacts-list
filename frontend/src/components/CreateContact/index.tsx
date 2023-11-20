@@ -3,13 +3,16 @@ import { create } from "../../api";
 import { Button } from "../Button";
 import { Form, FormGroup, FormInput } from "./styles";
 import { CreateContactDto } from "../../types";
+import { IContact } from "../Contact/types";
 
-export const CreateContact = () => {
+export const CreateContact = ({ setCreateModalOpen }: IContact) => {
   const { register, handleSubmit } = useForm();
 
   const handleCreateContact = async (data: CreateContactDto) => {
     try {
       await create({ ...data });
+      if (!setCreateModalOpen) return;
+      setCreateModalOpen(false);
     } catch (error) {
       console.log(error);
     }

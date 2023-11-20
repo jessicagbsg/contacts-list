@@ -65,7 +65,7 @@ export const Layout = () => {
           setIsOpen={setCreateModalOpen}
         >
           <h2 style={{ marginBottom: "2rem" }}>Create Contact</h2>
-          <CreateContact />
+          <CreateContact setCreateModalOpen={setCreateModalOpen} />
         </ContactModal>
       )}
     </>

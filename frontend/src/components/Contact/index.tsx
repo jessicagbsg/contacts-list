@@ -59,6 +59,7 @@ export const Contact = ({
             lastName={lastName}
             phoneNumber={phoneNumber}
             id={id}
+            setEditModalOpen={setEditModalOpen}
           />
         </ContactModal>
       )}

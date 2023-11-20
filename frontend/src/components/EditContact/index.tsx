@@ -10,6 +10,7 @@ export const EditContact = ({
   lastName,
   phoneNumber,
   id,
+  setEditModalOpen,
 }: IContact) => {
   const { register, handleSubmit } = useForm();
 
@@ -30,10 +31,13 @@ export const EditContact = ({
       }
 
       await updateContact(id, updateParams);
+      if (!setEditModalOpen) return;
+      setEditModalOpen(false);
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <Form
       onSubmit={handleSubmit((data) =>

@@ -4,4 +4,6 @@ export interface IContact {
   fullName?: string;
   phoneNumber?: string;
   id?: number;
+  setEditModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setCreateModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
