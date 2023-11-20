@@ -5,11 +5,37 @@ import { Button } from "../components/Button";
 import { Search } from "../components/Search";
 import { ContactsList } from "../components/ContactsList";
 import { ContactModal } from "../components/Modal";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CreateContact } from "../components/CreateContact";
+import { listContacts } from "../api";
+import { Contact, ContactFilters } from "../types";
 
 export const Layout = () => {
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
+
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [error, setError] = useState<string | undefined>();
+
+  const getContacts = useCallback(async () => {
+    setError(undefined);
+    try {
+      const response = await listContacts();
+      setContacts(response);
+    } catch (err) {
+      setError("No contacts found");
+    }
+  }, []);
+
+  const getContactsWithFilter = useCallback(async (filter: ContactFilters) => {
+    setError(undefined);
+    const response = await listContacts(filter);
+    setContacts(response);
+    if (response.length === 0) setError("No contacts found");
+  }, []);
+
+  useEffect(() => {
+    getContacts();
+  }, [contacts]);
 
   const openAddContactModal = () => {
     setCreateModalOpen(true);
@@ -26,8 +52,9 @@ export const Layout = () => {
             Add Contact
           </Button>
         </AddContactContainer>
-        <Search />
-        <ContactsList />
+        <Search onInputChange={getContactsWithFilter} />
+        <ContactsList contacts={contacts} />
+        {error && <p>{error}</p>}
       </Container>
       {createModalOpen && (
         <ContactModal

@@ -43,7 +43,9 @@ export default class ContactRepository {
       where: {
         AND: [
           {
-            last_name: options.last_name.toLowerCase(),
+            last_name: {
+              contains: options?.last_name?.toLowerCase(),
+            },
           },
           {
             deleted_at: null,

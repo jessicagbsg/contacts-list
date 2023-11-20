@@ -5,21 +5,30 @@ import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { HiPhone } from "react-icons/hi";
 import { ContactModal } from "../Modal";
 import { EditContact } from "../EditContact";
+import { IContact } from "./types";
+import { deleteContact } from "../../api";
 
-export const Contact = () => {
+export const Contact = ({ fullName, phoneNumber, id }: IContact) => {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
+
   const openEditContactModal = () => {
     setEditModalOpen(true);
   };
-  const handleDeleteContact = () => {};
+
+  const handleDeleteContact = async () => {
+    try {
+      if (!id) return;
+      const response = await deleteContact(id);
+    } catch (error) {}
+  };
   return (
     <>
       <ContactContent>
         <ContactInfo>
-          <h3>name here</h3>
+          <h3>{fullName}</h3>
           <SideItems>
             <HiPhone color="#a6a6a6" />
-            <p>phone here</p>
+            <p>{phoneNumber}</p>
           </SideItems>
         </ContactInfo>
 

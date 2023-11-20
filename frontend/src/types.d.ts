@@ -21,3 +21,5 @@ export interface CreateContactDto {
   last_name: string;
   phone: string;
 }
+
+export type ContactsList = Contact[];
