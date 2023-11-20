@@ -8,7 +8,13 @@ import { EditContact } from "../EditContact";
 import { IContact } from "./types";
 import { deleteContact } from "../../api";
 
-export const Contact = ({ fullName, phoneNumber, id }: IContact) => {
+export const Contact = ({
+  firstName,
+  lastName,
+  fullName,
+  phoneNumber,
+  id,
+}: IContact) => {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
   const openEditContactModal = () => {
@@ -48,7 +54,12 @@ export const Contact = ({ fullName, phoneNumber, id }: IContact) => {
           setIsOpen={setEditModalOpen}
         >
           <h2 style={{ marginBottom: "2rem" }}>Edit Contact</h2>
-          <EditContact />
+          <EditContact
+            firstName={firstName}
+            lastName={lastName}
+            phoneNumber={phoneNumber}
+            id={id}
+          />
         </ContactModal>
       )}
     </>

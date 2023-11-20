@@ -13,6 +13,8 @@ export const ContactsList = ({ contacts }: IContactsList) => {
               id={contact?.id}
               fullName={contact?.full_name}
               phoneNumber={contact?.phone}
+              firstName={contact?.first_name}
+              lastName={contact?.last_name}
             />
           );
         })}

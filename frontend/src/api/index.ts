@@ -28,7 +28,7 @@ export async function listContacts(filters?: ContactFilters) {
 
 export async function updateContact(id: number, data: UpdateContactDto) {
   const response = await httpClient.patch<Contact>(`/update/${id}`, {
-    data,
+    ...data,
   });
   return response.data;
 }

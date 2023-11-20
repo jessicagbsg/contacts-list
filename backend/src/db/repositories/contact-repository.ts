@@ -79,6 +79,12 @@ export default class ContactRepository {
         }
       }
 
+      if (contact.first_name || contact.last_name) {
+        contact.full_name = `${
+          contact.first_name || contactExists.first_name
+        } ${contact.last_name || contactExists.last_name}`;
+      }
+
       return await prismaClient.contact.update({
         where: {
           id,
