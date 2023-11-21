@@ -4,6 +4,9 @@
 
 This project was designed to create, read, update and delete contacts
 
+## Layout
+![ezgif com-video-to-gif (1)](https://github.com/jessicagbsg/contacts-list/assets/98706386/9e889d69-190c-4a5c-8084-0d1b62c38d41)
+
 # Tools Used
 
 ### Front-End
