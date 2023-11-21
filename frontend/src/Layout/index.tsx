@@ -9,6 +9,8 @@ import { useCallback, useEffect, useState } from "react";
 import { CreateContact } from "../components/CreateContact";
 import { listContacts } from "../api";
 import { Contact, ContactFilters } from "../types";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Layout = () => {
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
@@ -23,7 +25,7 @@ export const Layout = () => {
       const response = await listContacts();
       setContacts(response);
     } catch (err) {
-      setError("No contacts found");
+      toast("No contacts found", { type: "error" });
     }
   }, []);
 
@@ -32,7 +34,7 @@ export const Layout = () => {
     setfiltered(filtered);
     const response = await listContacts(filter);
     setContacts(response);
-    if (response.length === 0) setError("No contacts found");
+    if (response.length === 0) toast("No contacts found", { type: "error" });
   }, []);
 
   useEffect(() => {
@@ -68,6 +70,7 @@ export const Layout = () => {
           <CreateContact setCreateModalOpen={setCreateModalOpen} />
         </ContactModal>
       )}
+      <ToastContainer />
     </>
   );
 };

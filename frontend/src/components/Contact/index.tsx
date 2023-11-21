@@ -25,6 +25,7 @@ export const Contact = ({
     try {
       if (!id) return;
       await deleteContact(id);
+      window.location.reload();
     } catch (error) {}
   };
   return (

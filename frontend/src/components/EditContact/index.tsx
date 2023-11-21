@@ -4,6 +4,7 @@ import { Form, FormGroup, FormInput } from "./styles";
 import { IContact } from "../Contact/types";
 import { useForm } from "react-hook-form";
 import { updateContact } from "../../api";
+import { toast } from "react-toastify";
 
 export const EditContact = ({
   firstName,
@@ -17,6 +18,10 @@ export const EditContact = ({
   const handleEditContact = async (data: UpdateContactDto) => {
     try {
       if (!id) return;
+      if (!data.last_name && !data.last_name && !data.phone) {
+        toast("There should be at least one change", { type: "error" });
+      }
+
       let updateParams: Record<string, string> = {};
       if (data.first_name) {
         updateParams.first_name = data.first_name;
@@ -31,8 +36,10 @@ export const EditContact = ({
       }
 
       await updateContact(id, updateParams);
+
       if (!setEditModalOpen) return;
       setEditModalOpen(false);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }

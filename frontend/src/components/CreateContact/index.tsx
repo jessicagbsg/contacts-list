@@ -4,15 +4,20 @@ import { Button } from "../Button";
 import { Form, FormGroup, FormInput } from "./styles";
 import { CreateContactDto } from "../../types";
 import { IContact } from "../Contact/types";
+import { toast } from "react-toastify";
 
 export const CreateContact = ({ setCreateModalOpen }: IContact) => {
   const { register, handleSubmit } = useForm();
 
   const handleCreateContact = async (data: CreateContactDto) => {
     try {
+      if (!data.first_name || !data.last_name || !data.phone) {
+        toast("All fields are required", { type: "error" });
+      }
       await create({ ...data });
       if (!setCreateModalOpen) return;
       setCreateModalOpen(false);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
